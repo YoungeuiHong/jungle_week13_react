@@ -5,6 +5,7 @@ import Logo from "../logo/Logo";
 import SidebarItems from "./SidebarItems";
 import { CollapseButton } from "./CollapseButton/CollapseButton";
 import { sidebarAtom, sidebarWidthAtom } from "@/app/components/layout/Layout";
+import BadgeAvatar from "@/app/components/layout/sidebar/Profile/BadgeAvatar";
 
 interface Props {
   onSidebarClose: () => void;
@@ -48,8 +49,8 @@ const Sidebar = ({ onSidebarClose }: Props) => {
             height: "100%",
           }}
         >
-          <Box px={3}>
-            <Logo showName={isSidebarOpen} />
+          <Box sx={{ marginLeft: 6, marginTop: 3 }}>
+            <BadgeAvatar />
           </Box>
           <Box>
             <SidebarItems />
