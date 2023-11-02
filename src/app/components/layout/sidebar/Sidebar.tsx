@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Drawer } from "@mui/material";
+import { Box, Drawer, Typography } from "@mui/material";
 import { useAtom, useAtomValue } from "jotai";
-import Logo from "../logo/Logo";
 import SidebarItems from "./SidebarItems";
 import { CollapseButton } from "./CollapseButton/CollapseButton";
 import { sidebarAtom, sidebarWidthAtom } from "@/app/components/layout/Layout";
 import BadgeAvatar from "@/app/components/layout/sidebar/Profile/BadgeAvatar";
+import { Stack } from "@mui/system";
 
 interface Props {
   onSidebarClose: () => void;
@@ -16,7 +16,7 @@ const Sidebar = ({ onSidebarClose }: Props) => {
   const [sidebarWidth, setSidebarWidth] = useAtom(sidebarWidthAtom);
 
   useEffect(() => {
-    setSidebarWidth(isSidebarOpen ? 250 : 95);
+    setSidebarWidth(isSidebarOpen ? 270 : 95);
   }, [isSidebarOpen]);
 
   return (
@@ -49,9 +49,18 @@ const Sidebar = ({ onSidebarClose }: Props) => {
             height: "100%",
           }}
         >
-          <Box sx={{ marginLeft: 6, marginTop: 3 }}>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ marginTop: 3 }}
+          >
             <BadgeAvatar />
-          </Box>
+            <Typography variant="h3" sx={{ marginTop: 2.5 }}>
+              홍영의
+            </Typography>
+            <Typography variant="subtitle2">Jungle Platform Labs</Typography>
+          </Stack>
           <Box>
             <SidebarItems />
           </Box>

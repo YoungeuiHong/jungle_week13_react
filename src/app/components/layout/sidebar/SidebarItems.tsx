@@ -11,7 +11,7 @@ const SidebarItems = () => {
   const isSidebarOpen = useAtomValue(sidebarAtom);
 
   return (
-    <Box sx={{ px: 3, paddingTop: 4 }}>
+    <Box sx={{ px: 3.5, paddingTop: 6 }}>
       <List sx={{ pt: 0 }} className="sidebarNav">
         {Menuitems.map((item: MenuItem) => {
           if ("subheader" in item && item.subheader) {

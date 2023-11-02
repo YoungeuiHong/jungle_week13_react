@@ -46,7 +46,7 @@ export default function BadgeAvatar() {
       size="large"
     >
       <Avatar
-        alt="My Profile"
+        alt="My SmallAvatar"
         src="/memoji.png"
         sx={{ width: 150, height: 150 }}
       />

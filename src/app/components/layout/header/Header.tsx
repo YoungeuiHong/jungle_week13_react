@@ -68,7 +68,7 @@ const Header = () => {
         bgcolor: theme.palette.background.default,
         transition: isSidebarOpen ? theme.transitions.create("width") : "none",
         [theme.breakpoints.up("lg")]: {
-          minHeight: "70px",
+          minHeight: "80px",
         },
       }}
     >

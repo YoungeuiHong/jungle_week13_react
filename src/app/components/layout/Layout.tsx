@@ -26,7 +26,7 @@ const PageWrapper = styled("main", {
 })<PageWrapperProps>(({ theme, isSidebarOpen }) => ({
   display: "flex",
   flexGrow: 1,
-  paddingBottom: "60px",
+  // paddingBottom: "60px",
   flexDirection: "column",
   zIndex: 1,
   backgroundColor: "transparent",
@@ -77,29 +77,30 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <MainWrapper className="mainwrapper">
       {/* ------------------------------------------- */}
-      {/* Sidebar */}
+      {/* Header */}
       {/* ------------------------------------------- */}
       <Header />
+      {/* ------------------------------------------- */}
+      {/* Sidebar */}
+      {/* ------------------------------------------- */}
       <Sidebar onSidebarClose={onSidebarClose} />
       {/* ------------------------------------------- */}
-      {/* PageWrapper */}
+      {/* Main Content */}
       {/* ------------------------------------------- */}
       <PageWrapper
         theme={theme}
         isSidebarOpen={isSidebarOpen}
         sx={{ margin: "auto" }}
       >
-        {/* ------------------------------------------- */}
-        {/* Page Route */}
-        {/* ------------------------------------------- */}
-        <Box sx={{ minHeight: "calc(100vh - 170px)" }}>
+        <Box
+          sx={{
+            minHeight: "100vh",
+            backgroundColor: (theme) => theme.palette.grey["100"],
+          }}
+        >
           {/*TODO*/}
           {children}
         </Box>
-        {/* ------------------------------------------- */}
-        {/* End Page */}
-        {/* ------------------------------------------- */}
-        {/*</Container>*/}
       </PageWrapper>
     </MainWrapper>
   );

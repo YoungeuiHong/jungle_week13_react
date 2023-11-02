@@ -16,17 +16,13 @@ export interface ChildMenuItem {
 const Menuitems: MenuItem[] = [
   {
     id: "1",
-    title: "친구 추가",
-    href: "/friend",
+    title: "게시판",
+    href: "/dashboard",
     icon: "list",
   },
   {
-    navlabel: true,
-    subheader: "채팅방 목록",
-  },
-  {
     id: "2",
-    title: "채팅방 목록",
+    title: "채팅방",
     href: "/chatroom",
     icon: "create",
   },
