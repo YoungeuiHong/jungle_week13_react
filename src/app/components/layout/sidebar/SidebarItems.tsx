@@ -5,9 +5,10 @@ import NavItem from "./NavItem/NavItem";
 import NavGroup from "./NavGroup/NavGroup";
 import { useAtomValue } from "jotai/index";
 import { sidebarAtom } from "@/app/components/layout/Layout";
+import { usePathname } from "next/navigation";
 
 const SidebarItems = () => {
-  const { pathname } = ""; // TODO
+  const pathname = usePathname(); // TODO
   const isSidebarOpen = useAtomValue(sidebarAtom);
 
   return (

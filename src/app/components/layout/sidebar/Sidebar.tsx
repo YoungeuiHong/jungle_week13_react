@@ -6,6 +6,8 @@ import { CollapseButton } from "./CollapseButton/CollapseButton";
 import { sidebarAtom, sidebarWidthAtom } from "@/app/components/layout/Layout";
 import BadgeAvatar from "@/app/components/layout/sidebar/Profile/BadgeAvatar";
 import { Stack } from "@mui/system";
+import Icon from "@mui/material/Icon";
+import SmallAvatar from "@/app/components/avatar/SmallAvatar";
 
 interface Props {
   onSidebarClose: () => void;
@@ -49,18 +51,23 @@ const Sidebar = ({ onSidebarClose }: Props) => {
             height: "100%",
           }}
         >
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ marginTop: 3 }}
-          >
-            <BadgeAvatar />
-            <Typography variant="h3" sx={{ marginTop: 2.5 }}>
-              홍영의
-            </Typography>
-            <Typography variant="subtitle2">Jungle Platform Labs</Typography>
-          </Stack>
+          {isSidebarOpen ? (
+            <Stack
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ marginTop: 3 }}
+            >
+              <BadgeAvatar />
+              <Typography variant="h3" sx={{ marginTop: 2.5 }}>
+                홍영의
+              </Typography>
+              <Typography variant="subtitle2">Jungle Platform Labs</Typography>
+            </Stack>
+          ) : (
+            <SmallAvatar />
+          )}
+
           <Box>
             <SidebarItems />
           </Box>
