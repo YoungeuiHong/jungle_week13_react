@@ -37,3 +37,11 @@ next-env.d.ts
 
 # IntelliJ
 /.idea/
+
+# Firebase
+/.firebase/
+/.github/
+database-debug.log
+fire*.log
+pubsub-debug.log
+ui-debug.log
