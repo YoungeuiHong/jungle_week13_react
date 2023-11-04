@@ -18,6 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta
+        name="google-site-verification"
+        content="VCymJhnZunDnSL0DkrcDf_qu1RlyfOvalXaUbdkvsEU"
+      />
       <body className={inter.className}>
         <ThemeClient>
           <Layout>{children}</Layout>
