@@ -8,5 +8,7 @@ export default function ThemeClient({
 }: {
   children: React.ReactNode;
 }) {
-  return <ThemeProvider theme={themes}>{children}</ThemeProvider>;
+  const theme = themes();
+
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

@@ -6,7 +6,6 @@ import { CollapseButton } from "./CollapseButton/CollapseButton";
 import { sidebarAtom, sidebarWidthAtom } from "@/app/components/layout/Layout";
 import BadgeAvatar from "@/app/components/layout/sidebar/Profile/BadgeAvatar";
 import { Stack } from "@mui/system";
-import Icon from "@mui/material/Icon";
 import SmallAvatar from "@/app/components/avatar/SmallAvatar";
 
 interface Props {
@@ -38,11 +37,6 @@ const Sidebar = ({ onSidebarClose }: Props) => {
             width: sidebarWidth,
             boxSizing: "border-box",
             overflowX: "hidden",
-          },
-        }}
-        slotProps={{
-          backdrop: {
-            invisible: true,
           },
         }}
       >
