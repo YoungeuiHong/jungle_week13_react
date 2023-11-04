@@ -9,8 +9,10 @@ import { useTheme } from "@mui/material/styles";
 import { AppBar, Box, IconButton, InputBase, Toolbar } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import { alpha, styled } from "@mui/system";
+import { signOut } from "next-auth/react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -105,6 +107,21 @@ const Header = () => {
           }}
         >
           <NotificationsIcon />
+        </IconButton>
+        <IconButton
+          size="large"
+          color="inherit"
+          sx={{
+            width: 35,
+            height: 35,
+            mt: 1,
+            ...{
+              color: "grey.400",
+            },
+          }}
+          onClick={() => signOut()}
+        >
+          <LogoutIcon />
         </IconButton>
       </Toolbar>
     </AppBar>
