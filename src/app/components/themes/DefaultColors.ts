@@ -6,6 +6,12 @@ export const themes = () => {
     direction: "ltr",
     palette: {
       primary: {
+        main: "#f6b701",
+        light: "#FEF5E5",
+        dark: "#ae8e59",
+        contrastText: "#ffffff",
+      },
+      primary_old: {
         main: "#5D87FF",
         light: "#ECF2FF",
         dark: "#4570EA",
