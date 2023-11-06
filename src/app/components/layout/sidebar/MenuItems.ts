@@ -24,7 +24,7 @@ const Menuitems: MenuItem[] = [
     id: "2",
     title: "채팅방",
     href: "/chatroom",
-    icon: "create",
+    icon: "chat",
   },
 ];
 

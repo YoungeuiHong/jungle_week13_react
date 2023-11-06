@@ -11,7 +11,6 @@ import {
   Tooltip,
   useTheme,
 } from "@mui/material";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 // jotai
 import { useAtomValue } from "jotai";
 import { sidebarAtom } from "@/app/components/layout/Layout";
@@ -58,8 +57,6 @@ const NavItem: React.FC<NavItemProps> = ({
     },
   }));
 
-  // const NavLinkStyled = <div></div>
-
   const NavLinkStyled = styled(Link)(() => ({
     color: theme.palette.text.secondary,
     textDecoration: "none",
@@ -90,8 +87,7 @@ const NavItem: React.FC<NavItemProps> = ({
                 color: "inherit",
               }}
             >
-              {/*<Icon>{item.icon}</Icon>*/}
-              <PersonAddIcon />
+              <Icon>{item.icon}</Icon>
             </ListItemIcon>
             <ListItemText>{item.title}</ListItemText>
           </ListItemStyled>
@@ -109,8 +105,7 @@ const NavItem: React.FC<NavItemProps> = ({
                   color: "inherit",
                 }}
               >
-                {/*<Icon>{item.icon}</Icon>*/}
-                <PersonAddIcon />
+                <Icon>{item.icon}</Icon>
               </ListItemIcon>
             </ListItemStyled>
           </Tooltip>

@@ -31,6 +31,12 @@ export default async function RootLayout({
         name="google-site-verification"
         content="VCymJhnZunDnSL0DkrcDf_qu1RlyfOvalXaUbdkvsEU"
       />
+      <head>
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
+      </head>
       <body className={inter.className}>
         <SessionProvider session={session}>
           <ThemeClient>
