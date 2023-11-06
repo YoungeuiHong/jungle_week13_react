@@ -10,6 +10,7 @@ export default function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
         />
+        <title>Jungle</title>
       </Head>
       <Layout>
         <Component {...pageProps} />

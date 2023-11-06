@@ -27,15 +27,16 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <meta
-        name="google-site-verification"
-        content="VCymJhnZunDnSL0DkrcDf_qu1RlyfOvalXaUbdkvsEU"
-      />
       <head>
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
         />
+        <meta
+          name="google-site-verification"
+          content="VCymJhnZunDnSL0DkrcDf_qu1RlyfOvalXaUbdkvsEU"
+        />
+        <title>Jungle</title>
       </head>
       <body className={inter.className}>
         <SessionProvider session={session}>
