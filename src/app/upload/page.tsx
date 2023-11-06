@@ -4,7 +4,14 @@ import TitleIcon from "@mui/icons-material/Title";
 import { ChangeEvent, useRef, useState } from "react";
 import { Box } from "@mui/system";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Button, Grid, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage, fireStore } from "@/lib/firebase/config";
 import { addDoc, collection, DocumentData } from "@firebase/firestore";
@@ -14,6 +21,8 @@ export default function Upload() {
   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
   const [preview, setPreview] = useState<string | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [toastOpen, setToastOpen] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
 
   const onClickBox = () => {
     if (inputRef != null && inputRef.current != null) {
@@ -31,7 +40,14 @@ export default function Upload() {
   };
 
   const onClickUpload = () => {
+    if (!title) {
+      setErrMsg("제목을 입력해주세요");
+      setToastOpen(true);
+      return;
+    }
     if (!uploadedFile) {
+      setErrMsg("파일을 업로드해주세요.");
+      setToastOpen(true);
       return;
     }
 
@@ -46,45 +62,26 @@ export default function Upload() {
         } as DocumentData);
       });
     });
+
+    setToastOpen(false);
   };
 
   return (
-    <Grid container style={{ marginTop: 100, marginLeft: 5 }}>
-      <Grid item xs={12}>
-        <TextInput
-          placeholder={"제목을 입력하세요"}
-          icon={<TitleIcon />}
-          width={"40vw"}
-          value={title}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setTitle(event.target.value);
-          }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        {preview ? (
-          <Box
-            sx={{
-              display: "flex",
-              width: "auto",
-              height: "50vh",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 2,
-              marginLeft: 3,
-              marginRight: 2,
-              borderRadius: 2,
-              backgroundColor: "#FFFFFF",
+    <>
+      <Grid container style={{ marginTop: 100, marginLeft: 5 }}>
+        <Grid item xs={12}>
+          <TextInput
+            placeholder={"제목을 입력하세요"}
+            icon={<TitleIcon />}
+            width={"40vw"}
+            value={title}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setTitle(event.target.value);
             }}
-            onClick={onClickBox}
-          >
-            <img
-              src={preview}
-              style={{ maxWidth: "100%", maxHeight: "100%" }}
-            />
-          </Box>
-        ) : (
-          <>
+          />
+        </Grid>
+        <Grid item xs={12}>
+          {preview ? (
             <Box
               sx={{
                 display: "flex",
@@ -96,45 +93,86 @@ export default function Upload() {
                 marginLeft: 3,
                 marginRight: 2,
                 borderRadius: 2,
-                bgcolor: "grey.300",
-                "&:hover": {
-                  bgcolor: "grey.400",
-                },
+                backgroundColor: "#FFFFFF",
               }}
               onClick={onClickBox}
             >
-              <CloudUploadIcon sx={{ marginRight: 2 }} />
-              <Typography>이미지 파일을 업로드하세요</Typography>
+              <img
+                src={preview}
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+              />
             </Box>
-          </>
-        )}
-        <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: "auto",
+                  height: "50vh",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: 2,
+                  marginLeft: 3,
+                  marginRight: 2,
+                  borderRadius: 2,
+                  bgcolor: "grey.300",
+                  "&:hover": {
+                    bgcolor: "grey.400",
+                  },
+                }}
+                onClick={onClickBox}
+              >
+                <CloudUploadIcon sx={{ marginRight: 2 }} />
+                <Typography>이미지 파일을 업로드하세요</Typography>
+              </Box>
+            </>
+          )}
+          <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
+        </Grid>
+        <Grid item xs={12}>
+          <Stack direction="row" justifyContent="flex-end">
+            <Button
+              sx={{
+                marginTop: 2,
+                marginRight: 3,
+                width: "auto",
+                px: 5,
+                py: 1,
+                borderRadius: 2,
+                "&.MuiButton-text": {
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                },
+              }}
+              style={{
+                fontColor: "#FFFFFF",
+                backgroundImage: `linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%)`,
+              }}
+              onClick={onClickUpload}
+            >
+              업 로 드
+            </Button>
+          </Stack>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Stack direction="row" justifyContent="flex-end">
-          <Button
-            sx={{
-              marginTop: 2,
-              marginRight: 3,
-              width: "auto",
-              px: 5,
-              py: 1,
-              borderRadius: 2,
-              "&.MuiButton-text": {
-                color: "#FFFFFF",
-                fontWeight: 700,
-              },
-            }}
-            style={{
-              fontColor: "#FFFFFF",
-              backgroundImage: `linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%)`,
-            }}
-            onClick={onClickUpload}
-          >
-            업 로 드
-          </Button>
-        </Stack>
-      </Grid>
-    </Grid>
+      <Snackbar
+        open={toastOpen}
+        autoHideDuration={3000}
+        onClose={() => setToastOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        sx={{ marginBottom: 15, marginLeft: 35 }}
+      >
+        <Alert
+          variant="filled"
+          severity="error"
+          sx={{
+            backgroundColor: "#ffbd02",
+            px: 2,
+          }}
+        >
+          {errMsg}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
