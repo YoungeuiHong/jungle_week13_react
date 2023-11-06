@@ -15,13 +15,11 @@ import {
   Toolbar,
 } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import { alpha, styled } from "@mui/system";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import TextInput from "@/app/components/input/TextInput";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,7 +93,7 @@ const Header = () => {
         bgcolor: theme.palette.background.default,
         transition: isSidebarOpen ? theme.transitions.create("width") : "none",
         [theme.breakpoints.up("lg")]: {
-          minHeight: "80px",
+          minHeight: "70px",
         },
       }}
     >
@@ -109,18 +107,12 @@ const Header = () => {
             },
           }}
         ></Box>
-        <TextInput
-          placeholder={"검색어를 입력하세요"}
-          icon={<SearchIcon />}
-          width={"40vw"}
-        />
         <Box sx={{ flexGrow: 1 }} />
         <Stack
           direction="row"
           justifyContent="center"
           alignItems="center"
           spacing={1}
-          sx={{ paddingTop: 2 }}
         >
           <LinkStyled href="/upload">업로드</LinkStyled>
           <IconButton
