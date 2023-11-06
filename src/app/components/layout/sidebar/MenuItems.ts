@@ -20,12 +20,12 @@ const Menuitems: MenuItem[] = [
     href: "/dashboard",
     icon: "list",
   },
-  {
-    id: "2",
-    title: "채팅방",
-    href: "/chatroom",
-    icon: "chat",
-  },
+  // {
+  //   id: "2",
+  //   title: "채팅방",
+  //   href: "/chatroom",
+  //   icon: "chat",
+  // },
 ];
 
 export default Menuitems;

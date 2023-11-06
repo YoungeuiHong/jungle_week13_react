@@ -13,6 +13,7 @@ import { collection, getDocs } from "@firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { getSession } from "next-auth/react";
 
 export interface Post {
   id: string;
@@ -57,6 +58,16 @@ export default function Dashboard({ posts }) {
 export const getServerSideProps: GetServerSideProps<{ posts: Post[] }> = async (
   context,
 ) => {
+  const session = await getSession(context);
+
+  if (!session || !session.user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/api/auth/signin",
+      },
+    };
+  }
   const querySnapshot = await getDocs(collection(db, "posts"));
   const posts: Post[] = [];
   querySnapshot.forEach((doc) => {
