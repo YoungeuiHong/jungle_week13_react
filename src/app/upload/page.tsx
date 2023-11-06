@@ -6,6 +6,7 @@ import { Box } from "@mui/system";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   Alert,
+  Backdrop,
   Button,
   Grid,
   Snackbar,
@@ -15,14 +16,24 @@ import {
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage, fireStore } from "@/lib/firebase/config";
 import { addDoc, collection, DocumentData } from "@firebase/firestore";
+import { useRouter } from "next/navigation";
+import CircularProgressWithLabel from "@/app/components/progress/CircularProgressWithLabel";
 
 export default function Upload() {
+  /* state */
   const [title, setTitle] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | undefined>(undefined);
   const [preview, setPreview] = useState<string | undefined>(undefined);
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const [toastOpen, setToastOpen] = useState<boolean>(false);
   const [errMsg, setErrMsg] = useState<string>("");
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+
+  /* ref */
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  /* router */
+  const router = useRouter();
 
   const onClickBox = () => {
     if (inputRef != null && inputRef.current != null) {
@@ -54,16 +65,35 @@ export default function Upload() {
     // Create a reference to uploaded file
     const storageRef = ref(firebaseStorage, uploadedFile?.name);
 
-    uploadBytesResumable(storageRef, uploadedFile!).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(async (url) => {
-        await addDoc(collection(fireStore, "posts"), {
-          title: title,
-          imgUrl: url,
-        } as DocumentData);
-      });
-    });
+    const uploadTask = uploadBytesResumable(storageRef, uploadedFile!);
 
-    setToastOpen(false);
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        setBackdropOpen(true);
+        setProgress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await addDoc(collection(fireStore, "posts"), {
+            title: title,
+            imgUrl: downloadURL,
+          } as DocumentData).then(() => {
+            router.push("/dashboard");
+          });
+        });
+      },
+    );
   };
 
   return (
@@ -173,6 +203,17 @@ export default function Upload() {
           {errMsg}
         </Alert>
       </Snackbar>
+      <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={backdropOpen}
+        style={{ backgroundColor: "rgba(0,0,0,0.7)" }}
+        onClick={() => setBackdropOpen(false)}
+      >
+        <CircularProgressWithLabel value={progress} size={"10rem"} />
+      </Backdrop>
     </>
   );
 }
