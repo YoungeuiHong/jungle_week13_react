@@ -8,7 +8,7 @@ import { sidebarAtom } from "@/app/components/layout/Layout";
 import { usePathname } from "next/navigation";
 
 const SidebarItems = () => {
-  const pathname = usePathname(); // TODO
+  const pathname = usePathname();
   const isSidebarOpen = useAtomValue(sidebarAtom);
 
   return (

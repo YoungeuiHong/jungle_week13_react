@@ -17,7 +17,7 @@ const Sidebar = ({ onSidebarClose }: Props) => {
   const [sidebarWidth, setSidebarWidth] = useAtom(sidebarWidthAtom);
 
   useEffect(() => {
-    setSidebarWidth(isSidebarOpen ? 270 : 95);
+    setSidebarWidth(isSidebarOpen ? 270 : 100);
   }, [isSidebarOpen]);
 
   return (
@@ -45,7 +45,7 @@ const Sidebar = ({ onSidebarClose }: Props) => {
             height: "100%",
           }}
         >
-          {isSidebarOpen ? (
+          {isSidebarOpen && (
             <Stack
               direction="column"
               justifyContent="center"
@@ -58,8 +58,6 @@ const Sidebar = ({ onSidebarClose }: Props) => {
               </Typography>
               <Typography variant="subtitle2">Jungle Platform Labs</Typography>
             </Stack>
-          ) : (
-            <SmallAvatar />
           )}
 
           <Box>
