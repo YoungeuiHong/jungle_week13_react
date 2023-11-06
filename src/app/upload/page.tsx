@@ -4,7 +4,7 @@ import TitleIcon from "@mui/icons-material/Title";
 import { ChangeEvent, useRef, useState } from "react";
 import { Box } from "@mui/system";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Button, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage, fireStore } from "@/lib/firebase/config";
 import { addDoc, collection, DocumentData } from "@firebase/firestore";
@@ -49,36 +49,20 @@ export default function Upload() {
   };
 
   return (
-    <div style={{ marginTop: 100, marginLeft: 5 }}>
-      <TextInput
-        placeholder={"제목을 입력하세요"}
-        icon={<TitleIcon />}
-        width={"40vw"}
-        value={title}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setTitle(event.target.value);
-        }}
-      />
-
-      {preview ? (
-        <Box
-          sx={{
-            display: "flex",
-            width: "auto",
-            height: "50vh",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 2,
-            marginLeft: 3,
-            marginRight: 2,
-            borderRadius: 2,
+    <Grid container style={{ marginTop: 100, marginLeft: 5 }}>
+      <Grid item xs={12}>
+        <TextInput
+          placeholder={"제목을 입력하세요"}
+          icon={<TitleIcon />}
+          width={"40vw"}
+          value={title}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setTitle(event.target.value);
           }}
-          onClick={onClickBox}
-        >
-          <img src={preview} />
-        </Box>
-      ) : (
-        <>
+        />
+      </Grid>
+      <Grid item xs={12}>
+        {preview ? (
           <Box
             sx={{
               display: "flex",
@@ -90,30 +74,67 @@ export default function Upload() {
               marginLeft: 3,
               marginRight: 2,
               borderRadius: 2,
-              bgcolor: "grey.300",
-              "&:hover": {
-                bgcolor: "grey.400",
-              },
+              backgroundColor: "#FFFFFF",
             }}
             onClick={onClickBox}
           >
-            <CloudUploadIcon sx={{ marginRight: 2 }} />
-            <Typography>이미지 파일을 업로드하세요</Typography>
+            <img
+              src={preview}
+              style={{ maxWidth: "100%", maxHeight: "100%" }}
+            />
           </Box>
-        </>
-      )}
-      <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
-      <Button
-        sx={{
-          marginTop: 2,
-          marginLeft: 100,
-          width: "auto",
-          bgcolor: (theme) => theme.palette.primary,
-        }}
-        onClick={onClickUpload}
-      >
-        업로드
-      </Button>
-    </div>
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                width: "auto",
+                height: "50vh",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 2,
+                marginLeft: 3,
+                marginRight: 2,
+                borderRadius: 2,
+                bgcolor: "grey.300",
+                "&:hover": {
+                  bgcolor: "grey.400",
+                },
+              }}
+              onClick={onClickBox}
+            >
+              <CloudUploadIcon sx={{ marginRight: 2 }} />
+              <Typography>이미지 파일을 업로드하세요</Typography>
+            </Box>
+          </>
+        )}
+        <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
+      </Grid>
+      <Grid item xs={12}>
+        <Stack direction="row" justifyContent="flex-end">
+          <Button
+            sx={{
+              marginTop: 2,
+              marginRight: 3,
+              width: "auto",
+              px: 5,
+              py: 1,
+              borderRadius: 2,
+              "&.MuiButton-text": {
+                color: "#FFFFFF",
+                fontWeight: 700,
+              },
+            }}
+            style={{
+              fontColor: "#FFFFFF",
+              backgroundImage: `linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%)`,
+            }}
+            onClick={onClickUpload}
+          >
+            업 로 드
+          </Button>
+        </Stack>
+      </Grid>
+    </Grid>
   );
 }

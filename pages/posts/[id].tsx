@@ -3,7 +3,7 @@ import TextInput from "@/app/components/input/TextInput";
 import TitleIcon from "@mui/icons-material/Title";
 import { ChangeEvent, useRef, useState } from "react";
 import { Box } from "@mui/system";
-import { Button } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage, fireStore } from "@/lib/firebase/config";
 import { deleteDoc, doc, DocumentData, updateDoc } from "@firebase/firestore";
@@ -67,57 +67,102 @@ export default function Upload({ postData }) {
   };
 
   return (
-    <div style={{ marginTop: 100, marginLeft: 5 }}>
-      <TextInput
-        placeholder={"제목을 입력하세요"}
-        icon={<TitleIcon />}
-        width={"40vw"}
-        value={title}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          setTitle(event.target.value);
-        }}
-      />
-
-      <Box
-        sx={{
-          display: "flex",
-          width: "auto",
-          height: "50vh",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 2,
-          marginLeft: 3,
-          marginRight: 2,
-          borderRadius: 2,
-        }}
-        onClick={onClickBox}
-      >
-        {preview ? <img src={preview} /> : <img src={postData.imgUrl} />}
-      </Box>
-      <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
-      <Button
-        sx={{
-          marginTop: 2,
-          marginLeft: 100,
-          width: "auto",
-          bgcolor: (theme) => theme.palette.primary,
-        }}
-        onClick={onClickModify}
-      >
-        수정
-      </Button>
-      <Button
-        sx={{
-          marginTop: 2,
-          marginLeft: 100,
-          width: "auto",
-          bgcolor: (theme) => theme.palette.primary,
-        }}
-        onClick={onClickDelete}
-      >
-        삭제
-      </Button>
-    </div>
+    <Grid container style={{ marginTop: 100, marginLeft: 5 }}>
+      <Grid item xs={12}>
+        <TextInput
+          placeholder={"제목을 입력하세요"}
+          icon={<TitleIcon />}
+          width={"40vw"}
+          value={title}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setTitle(event.target.value);
+          }}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "auto",
+            height: "50vh",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: 2,
+            marginLeft: 3,
+            marginRight: 2,
+            borderRadius: 2,
+            backgroundColor: "#FFFFFF",
+          }}
+          onClick={onClickBox}
+        >
+          {preview ? (
+            <img
+              src={preview}
+              style={{ maxHeight: "100%", maxWidth: "100%" }}
+            />
+          ) : (
+            <img
+              src={postData.imgUrl}
+              style={{ maxHeight: "100%", maxWidth: "100%" }}
+            />
+          )}
+        </Box>
+        <input ref={inputRef} type="file" hidden onChange={onChangeFile} />
+      </Grid>
+      <Grid item xs={12}>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          spacing={2}
+          sx={{ marginLeft: 4, marginRight: 3, marginTop: 2 }}
+        >
+          <Button
+            sx={{
+              marginTop: 2,
+              marginRight: 3,
+              width: "auto",
+              px: 5,
+              py: 1,
+              borderRadius: 2,
+              backgroundColor: (theme) => theme.palette.grey["400"],
+              "&.MuiButton-text": {
+                color: "#FFFFFF",
+                fontWeight: 700,
+              },
+            }}
+            style={{
+              fontColor: "#FFFFFF",
+              backgroundColor: "#7C8FAC",
+              boxShadow: "none",
+            }}
+            onClick={onClickDelete}
+          >
+            삭 제
+          </Button>
+          <Button
+            sx={{
+              marginTop: 2,
+              marginRight: 3,
+              width: "auto",
+              px: 5,
+              py: 1,
+              borderRadius: 2,
+              "&.MuiButton-text": {
+                color: "#FFFFFF",
+                fontWeight: 700,
+              },
+            }}
+            style={{
+              fontColor: "#FFFFFF",
+              backgroundColor: "#f6b701",
+            }}
+            onClick={onClickModify}
+          >
+            수 정
+          </Button>
+        </Stack>
+      </Grid>
+    </Grid>
   );
 }
 

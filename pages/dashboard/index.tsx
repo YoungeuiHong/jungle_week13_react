@@ -31,7 +31,7 @@ export default function Dashboard({ posts }) {
         sx={{ marginTop: 8, padding: 4 }}
       >
         {posts.map((post: Post) => (
-          <Grid key={post.id} item xs={3} sx={{ minHeight: "800px" }}>
+          <Grid key={post.id} item xs={3}>
             <Link href={`/posts/${post.id}`} style={{ textDecoration: "none" }}>
               <Card sx={{ maxWidth: 345, minHeight: "100%" }}>
                 <CardActionArea>
