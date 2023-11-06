@@ -7,7 +7,8 @@ import { Button } from "@mui/material";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { firebaseStorage, fireStore } from "@/lib/firebase/config";
 import { deleteDoc, doc, DocumentData, updateDoc } from "@firebase/firestore";
-import { getAllPostIds, getPostData } from "@/lib/firebase/firestore";
+import { getPostData } from "@/lib/firebase/firestore";
+import { GetServerSideProps } from "next";
 
 export interface Post {
   id: string;
@@ -120,21 +121,10 @@ export default function Upload({ postData }) {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = await getAllPostIds();
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export async function getStaticProps({ params }) {
+export const getServerSideProps: GetServerSideProps<{ post: Post }> = async ({
+  params,
+}) => {
   const postData = await getPostData(params.id);
 
-  return {
-    props: {
-      postData,
-    },
-  };
-}
+  return { props: { postData } };
+};
