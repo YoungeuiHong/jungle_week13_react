@@ -83,7 +83,7 @@ export default function Upload({ postData }) {
         () => {
           // Handle successful uploads on complete
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await addDoc(collection(fireStore, "posts"), {
+            await updateDoc(docRef, {
               title: title,
               imgUrl: downloadURL,
             } as DocumentData).then(() => {
